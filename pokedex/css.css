@@ -1,0 +1,7 @@
+/* Pokedex styles */
+
+#pokemon-list-container {
+    position: sticky;
+    height: 100vh;
+    overflow: auto;
+}
