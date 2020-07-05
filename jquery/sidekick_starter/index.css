@@ -1,0 +1,17 @@
+/* Add cover to imgs in caroussel to be more repsonsive on breakpoint */
+.cover { object-fit: cover; }
+
+/* Add class for carroussel top text */
+#caroussel-inner-text {
+    position: absolute;
+    z-index: 1;
+    top: calc(100vh - 55%);
+    left: 10%;
+}
+
+/* Special background for header caroussel */
+.inner-text-bg { background-color: rgba(255, 255, 255, .8); }
+
+/* Reboot caroussel arrows on footer */
+#caroussel-left-reboot { left: -50px !important; }
+#caroussel-right-reboot { right: -50px !important; }
