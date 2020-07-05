@@ -30,16 +30,16 @@
                   <a class="nav-link" href="#">SK</a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="#animation-scroll">Fonctionnement <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" data-scroll href="#animation-scroll">Fonctionnement <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#pricing">Prix</a>
+                  <a class="nav-link" data-scroll href="#pricing">Prix</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Utilisateurs</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#testimonies">Temoignages</a>
+                  <a class="nav-link" data-scroll href="#testimonies">Temoignages</a>
                 </li>
               </ul>
             </div>
@@ -47,8 +47,8 @@
         <!-- First section - Carrousel -->
         <header id="carouselHeroBanner" class="carousel slide" data-ride="carousel">
           <div id="caroussel-inner-text" class="d-block">
-            <p class="inner-text-bg p-3"><strong>Rencontrez des personnes qui partagent les même centres d'intérêts que vous</strong></p>
-            <p class="h4 inner-text-bg mt-5 p-3">Sidekick</p>
+            <p class="h5 inner-text-bg p-3"><strong>Rencontrez des personnes qui partagent les même centres d'intérêts que vous</strong></p>
+            <p class="h1 inner-text-bg mt-5 p-3">Sidekick</p>
           </div>
           <!-- Content caroussel -->
           <div class="carousel-inner">
@@ -79,7 +79,7 @@
         <!-- Second & third section -->
         <main id="animation-scroll" class="container-fluid">
           <!-- 'How is it working' section -->
-          <div class="row bg-success pb-5">
+          <div class="row bg-success vh-100 pb-5">
             <!-- Sub title -->
             <div class="col-12 mt-5 mb-5">
               <h5 class="text-center text-white">Comment ça marche ?</h5>
@@ -122,19 +122,19 @@
                     <!-- List left -->
                     <ul class="col">
                       <li>
-                        <p id="animation-text">une solution simple</p>
+                        <p class="wow slideInLeft">une solution simple</p>
                       </li>
                       <li>
-                        <p id="animation-text2">une solution rapide</p>
+                        <p class="wow slideInLeft" data-wow-delay="0.2s">une solution rapide</p>
                       </li>
                     </ul>
                     <!-- List Right -->
                     <ul class="col">
                       <li>
-                        <p id="animation-text">une solution économique</p>
+                        <p class="wow slideInRight" data-wow-offset="0">une solution économique</p>
                       </li>
                       <li>
-                        <p id="animation-text2">une solution écologique</p>
+                        <p class="wow slideInRight" data-wow-delay="0.2s">une solution écologique</p>
                       </li>
                     </ul>
                   </div>
@@ -143,13 +143,10 @@
             </div>
           </div>
           <!-- Pricing title section -->
-          <div id="pricing" class="row">
+          <div id="pricing"  class="row text-center vh-100 pb-5">
             <div class="col-12 mt-5 mb-5">
               <h5 class="text-center">Prix</h5>
             </div>
-          </div>
-          <!-- All pricings section-->
-          <div class="row text-center pb-5">
             <div class="col-4">
               <p>
                 <span class="h6 d-block">Free</span>
@@ -183,7 +180,7 @@
         </main>
         <!-- Fourth section - Testimonials -->
         <footer id="testimonies" class="container-fluid">
-          <div class="row justify-content-center bg-success">
+          <div class="row justify-content-center bg-success vh-100">
             <!-- Testimonials title section -->
             <div class="col-12 mt-5">
               <h5 class="text-center text-white">Témoignages</h5>
@@ -227,6 +224,7 @@
 <script src="./js/jquery.waypoints.min.js"></script>
 <script src="./js/jquery.counterup.min.js"></script>
 <script src="./js/smooth-scroll.polyfills.min.js"></script>
+<script src="./js/wow.min.js"></script>
 <script src="js/main.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </html>
