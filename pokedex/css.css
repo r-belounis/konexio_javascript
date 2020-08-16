@@ -1,6 +1,6 @@
 /* Pokedex styles */
 
-#pokemon-list-container {
+#pokemon-list-container, #pokemon-detail-container {
     position: sticky;
     height: 100vh;
     overflow: auto;

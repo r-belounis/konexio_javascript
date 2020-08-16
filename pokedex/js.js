@@ -10,89 +10,87 @@ console.log("Gotta catch'em all !")
 // Container pour rendre la liste des pokemons
 const cardContainer = document.getElementById('pokemon-list-container');
 const statsContainer = document.getElementById('pokemon-detail-container');
-const pokemonSingleID = [];
 
 // Rendu HTML/DOM
 // --------------
-// Container de gauche
-// -------------------
-// Fonction pour fetch/rendu de la liste des 151 de la première génération des Pokemons
-const fetchPokemonList = async (pokemonList) => {
-    // Async fetch depuis pokeapi.co
-    const urlPokemonList = `https://pokeapi.co/api/v2/pokemon?limit=151`;
-    const res = await fetch(urlPokemonList);
-    const data = await res.json();
+$(function() {
 
-    console.log('Ceci est le résultat du fetch de "urlPokemonList"', data);
+    // Container de gauche
+    // -------------------
+    // Fonction pour fetch/rendu de la liste des 151 de la première génération des Pokemons
+    fetchPokemonList = async () => {
 
-    // Fetch des données requises et stockage des résultats
-    pokemonList = data.results.map((data, index) => ({
-        url: data.url,
-        name: data.name,
-        id: index + 1,
-        image: `https://pokeres.bastionbot.org/images/pokemon/${index + 1}.png`
-    }));
+        // Async fetch depuis pokeapi.co
+        const urlPokemonList = `https://pokeapi.co/api/v2/pokemon?limit=151`;
+        const res = await fetch(urlPokemonList);
+        const data = await res.json();
 
-    console.log('Ceci est le résultat du mapping de "pokemonList"', pokemonList);
+        // console.log('Ceci est le résultat du fetch de "urlPokemonList"', data);
 
-    // Appel de la fonction 'displayPokemon' pour rendre la liste des Pokemons dans le DOM
-    displayPokemonList(pokemonList);
-};
+        // Fetch des données requises et stockage des résultats
+        const pokemonList = data.results.map((data, index) => ({
+            name: data.name,
+            id: index + 1,
+            image: `https://pokeres.bastionbot.org/images/pokemon/${index + 1}.png`,
+            types: data.url.types
+        }));
 
-// Fonction pour montrer dans le container de gauche, chaque Pokemon avec le component 'Card' de bootstrap
-const displayPokemonList = pokemonList => {
-    // Mapping et rendu de la liste au container principal
-    const pokemonListToHTML = pokemonList.map(display =>
-        `
-        <div class="card mt-2 mb-2 align-items-center">
-            <img class="card-img-top w-50" src="${display.image}" alt="${display.name}">
-            <div class="card-body">
-                <h5 class="card-title">#${display.id}. ${display.name}</h5>
-                <a id="${display.id}" class="btn btn-primary" onclick="displayPokemonStatsPopup()">Voir stats</a>
+        // console.log('Ceci est le résultat du mapping de "pokemonList"', pokemonList);
+
+        // Mapping et rendu de la liste au container principal
+        const pokemonListToHTML = pokemonList.map(display =>
+            `
+            <div class="card mt-2 mb-2 align-items-center">
+                <img class="card-img-top w-50" src="${display.image}" alt="${display.name}">
+                <div class="card-body">
+                    <h5 class="card-title">#${display.id}. ${display.name}</h5>
+                    <button id="${display.id}" class="btn btn-primary" onclick="fetchPokemonStats(${display.id})">Voir stats</button>
+                </div>
             </div>
-        </div>
-        `
-    ).join("");
+            `
+        ).join("");
 
-    // Rendu DOM de la liste
-    cardContainer.innerHTML = pokemonListToHTML;
-}
+        // Rendu DOM de la liste
+        $(cardContainer).html(pokemonListToHTML);
+    };
 
-// Container de droite
-// -------------------
-// Fonction pour fetch les stats et autres détails du pokemon sélectionné
-const fetchPokemonStats = async (pokemonID) => {
+    // Container de droite
+    // -------------------
+    // Fonction pour fetch les stats et autres détails du pokemon sélectionné
+    fetchPokemonStats = async id => {
 
-    // Async fetch depuis pokeapi.co
-    const res = await fetch('https://pokeapi.co/api/v2/pokemon/'+pokemonID.toString()+'/');
-    const data = await res.json();
-    pokemonSingleID.push(data);
+        // Variables pour appeler notre url et stocker les informations
+        const urlStats = `https://cors-anywhere.herokuapp.com/http://pokeapi.co/api/v2/pokemon/${id}`;
+        const resStats = await fetch(urlStats);
+        const stats = await resStats.json();
 
-    console.log(pokemonSingleID);
+        // console.log('Ceci est le résultat du fetch de "urlPokemonId"', stats)
 
-    // Appel de la fonction 'displayPokemonStatsPopup' pour rendre les stats de chaque Pokemon
-    displayPokemonStatsPopup(pokemonID.url);
-}
+        renderPokemonStats(stats)
+    }
 
-//  Fonction pour montrer dans le container de droite, chaque stats du Pokemon sélectionné
-const displayPokemonStatsPopup = (pokemonStats) => {
+    renderPokemonStats = (data) => {
 
-    // Pour récupérer le type du pokemon sélectionné
-    // const type = pokemonStats.types.map(type => type.type.name).join(" ");
-    const pokemonStatsToHTML =
-        `
-        <div class="media">
+        // console.log('Ceci est le résultat de "data" après avoir cliqué sur le bouton', data)
 
-            <div class="media-body">
-                <h5 class="mt-0">${pokemonStats.name}</h5>
-                <p><small>Type: ${pokemonStats.types} | Height:</small> ${pokemonStats.height} | Weight: ${pokemonStats.weight}</p>
+        // Pour récupérer le type du pokemon sélectionné
+        const statsToHTML =
+            `
+            <div class="media">
+                <div class="media-body">
+                    <h5 class="mt-0">${data.name}</h5>
+                    <img class="card-img-top w-50" src="${data.sprites.other.dream_world.front_default}" alt="${data.name}">
+                    <p>Stats:<p>
+                    <p>${data.stats.map((i) => i.stat.name)}</p>
+                    <p>${data.stats.map((i) => i.base_stat)}<p>
+                    <p>Types: ${data.types.map((i) => i.type.name)} | Height:</small> ${data.height} | Weight: ${data.weight}</p>
+                </div>
             </div>
-        </div>
-        `;
+            `
 
-    statsContainer.innerHTML = pokemonStatsToHTML;
-}
+        $(statsContainer).html(statsToHTML);
+    }
 
 // On envoit nos Pokemons :)
 fetchPokemonList();
-fetchPokemonStats();
+});
